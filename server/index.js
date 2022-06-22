@@ -57,20 +57,8 @@ const dbRecord = async () => {
 }
 
 
-
-
-
-
-
-
-
-
-
 sendEmail();
 receiveEmail(); //receiving email online
-
-
-
 
 // save in MongoDB in Email Done
 

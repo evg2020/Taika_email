@@ -6,7 +6,7 @@ const Email = require('../models/Email')
 module.exports = function () {
   const database = {}
   database.saveEmailInDataBase = async function (mail) {
-    mongoose.connect("mongodb://localhost:27017/local", {
+   await mongoose.connect("mongodb://localhost:27017/local", {
       useUnifiedTopology: true,
       useNewUrlParser: true
     });
@@ -24,6 +24,5 @@ module.exports = function () {
   }
   return database;
 }
-
 // подключение к внешней базе данных
 //     const url = 'mongodb+srv://evg:bashneft@cluster0.xxdau.mongodb.net/?retryWrites=true&w=majority'
