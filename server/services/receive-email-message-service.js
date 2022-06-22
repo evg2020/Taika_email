@@ -62,7 +62,6 @@ module.exports = function () {
     console.log('------New email was received-----');
     console.log('from:', mail.from);
     databaseService().saveEmailInDataBase(mail)
-
   });
 
   mailListener.on("attachment", function (attachment, email) {

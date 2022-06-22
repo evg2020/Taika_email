@@ -3,6 +3,7 @@
 const express = require('express')
 const app = express()
 const path = require('path')
+const databaseService = require('./services/dataBase-service')()
 
 // const mail = require('./routes/mail')
 
@@ -30,50 +31,17 @@ app.post('/', async (req, res) => {
     await mail.save()
   } catch (e) {
     console.log(e);
-
   }
 })
 
-// local mongodb://localhost:27017
-//  app.use(mail)
-
-const dbRecord = async () => {
-  const mail = new Email({
-    from: [{
-      address: 'stayer.depart@yandex.ru',
-      name: 'Node js'
-    }],
-    date: 'Tue Jun 21 2022 15: 17: 49 GMT + 0300',
-    subject: 'Message from Node js',
-    text: 'This message was sent from Node js server'
-  })
-  try {
-    await mail.save()
-  } catch (e) {
-    console.log(e);
-
-  }
-
-}
 
 
-sendEmail();
-receiveEmail(); //receiving email online
 
-// save in MongoDB in Email Done
+// sendEmail();
+// receiveEmail();
+ const id = '62b2ae9b298e156e2d3f0e8c'
 
-// mongoose.connect("mongodb://localhost:27017/local", { useUnifiedTopology: true, useNewUrlParser: true });
-// const mail = new Email({
-//   from: [{
-//     address: 'stayer.depart@yandex.ru',
-//     name: 'Node js'
-//   }],
-//   date: 'Tue Jun 21 2022 15: 17: 49 GMT + 0300',
-//   subject: 'Message from Node js',
-//   text: 'This message was sent from Node js server'
-// })
-// mail.save(function(err){
-//   mongoose.disconnect();  // отключение от базы данных
-//   if(err) return console.log(err);
-//   console.log("Сохранен объект", mail);
-// });
+
+// databaseService.findEmailById(id)
+// databaseService.deleteEMailById(id)
+// databaseService.getAllEmailInDataBase()

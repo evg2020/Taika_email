@@ -2,11 +2,17 @@ const mongoose = require('mongoose')
 const Email = require('../models/Email')
 
 
-// save in MongoDB in Email Done
+
+// подключение к внешней базе данных https://cloud.mongodb.com/
+//mail    stayer.depart@yandex.ru
+// pass   bn
+//const url = 'mongodb+srv://evg:bashneft@cluster0.xxdau.mongodb.net/?retryWrites=true&w=majority'
+
 module.exports = function () {
-  const database = {}
+  const database = {};
+
   database.saveEmailInDataBase = async function (mail) {
-   await mongoose.connect("mongodb://localhost:27017/local", {
+    await mongoose.connect("mongodb://localhost:27017/local", {
       useUnifiedTopology: true,
       useNewUrlParser: true
     });
@@ -16,15 +22,69 @@ module.exports = function () {
       subject: mail.subject,
       text: mail.text
     })
-    email.save(function (err) {
-      mongoose.disconnect(); // отключение от базы данных
-      if (err) return console.log(err);
-      console.log("Сохранен объект", email);
-    });
+    email.save()
+      .then(email => {
+        console.log("Сохранен объект", email);
+        mongoose.disconnect()
+      })
+      .catch(err => {
+        console.log(err);
+        mongoose.disconnect();
+      })
+    //second variant--
+    // email.save(function (err) {
+    //   mongoose.disconnect(); // отключение от базы данных
+    //   if (err) {
+    //     return console.log(err)
+    //   };
+    //   console.log("Сохранен объект", email);
+    // });
   }
+
+  database.getAllEmailInDataBase = async function () {
+    await mongoose.connect("mongodb://localhost:27017/local", {
+      useUnifiedTopology: true,
+      useNewUrlParser: true
+    });
+    Email.find({}, (err, mail) => {
+      mongoose.disconnect();
+      if (err) {
+        return console.log(err);
+      }
+      console.log(mail);
+    })
+  }
+
+  database.findEmailById = async function (id) {
+    await mongoose.connect("mongodb://localhost:27017/local", {
+      useUnifiedTopology: true,
+      useNewUrlParser: true
+    });
+    Email.findById(id, (err, mail) => {
+      mongoose.disconnect();
+      if (err) {
+        return console.log(err);
+      }
+      console.log('getEmaiById->' + mail);
+
+    })
+  }
+
+  database.deleteEMailById = async function (id) {
+    await mongoose.connect("mongodb://localhost:27017/local", {
+      useUnifiedTopology: true,
+      useNewUrlParser: true
+    });
+    Email.deleteOne({
+      "_id": id
+    }, (err, mail) => {
+      mongoose.disconnect();
+      if (err) {
+        return console.log(err);
+      }
+      console.log(mail);
+    })
+  }
+
   return database;
 }
-
-
-// подключение к внешней базе данных
-//     const url = 'mongodb+srv://evg:bashneft@cluster0.xxdau.mongodb.net/?retryWrites=true&w=majority'
