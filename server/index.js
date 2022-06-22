@@ -39,9 +39,15 @@ app.post('/', async (req, res) => {
 
 // sendEmail();
 // receiveEmail();
- const id = '62b2ae9b298e156e2d3f0e8c'
+
+const id = '62b2ae9b298e156e2d3f0e8c'
 
 
 // databaseService.findEmailById(id)
 // databaseService.deleteEMailById(id)
-// databaseService.getAllEmailInDataBase()
+// databaseService.getAllEmailFromDataBase()
+
+const findByParam = {
+  address: 'evgeny.fedorenko@constant.obninsk.ru'
+}
+databaseService.getEmailByParam(findByParam)

@@ -31,22 +31,28 @@ module.exports = function () {
         console.log(err);
         mongoose.disconnect();
       })
-    //second variant--
-    // email.save(function (err) {
-    //   mongoose.disconnect(); // отключение от базы данных
-    //   if (err) {
-    //     return console.log(err)
-    //   };
-    //   console.log("Сохранен объект", email);
-    // });
   }
 
-  database.getAllEmailInDataBase = async function () {
+  database.getAllEmailFromDataBase = async function () {
     await mongoose.connect("mongodb://localhost:27017/local", {
       useUnifiedTopology: true,
       useNewUrlParser: true
     });
     Email.find({}, (err, mail) => {
+      mongoose.disconnect();
+      if (err) {
+        return console.log(err);
+      }
+      console.log(mail);
+    })
+  }
+
+  database.getEmailByParam = async function (param) {
+    await mongoose.connect("mongodb://localhost:27017/local", {
+      useUnifiedTopology: true,
+      useNewUrlParser: true
+    });
+    Email.find(param, (err, mail) => {
       mongoose.disconnect();
       if (err) {
         return console.log(err);
@@ -66,7 +72,6 @@ module.exports = function () {
         return console.log(err);
       }
       console.log('getEmaiById->' + mail);
-
     })
   }
 
@@ -75,9 +80,7 @@ module.exports = function () {
       useUnifiedTopology: true,
       useNewUrlParser: true
     });
-    Email.deleteOne({
-      "_id": id
-    }, (err, mail) => {
+    Email.deleteOne({"_id": id}, (err, mail) => {
       mongoose.disconnect();
       if (err) {
         return console.log(err);
